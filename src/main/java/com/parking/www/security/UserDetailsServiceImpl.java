@@ -1,7 +1,7 @@
 package com.parking.www.security;
 
-import com.parking.www.data.entity.User;
-import com.parking.www.data.service.UserRepository;
+import com.parking.www.model.entity.UserEntity;
+import com.parking.www.model.service.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,17 +24,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        if (userEntity == null) {
             throw new UsernameNotFoundException("No user present with username: " + username);
         } else {
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getHashedPassword(),
-                    getAuthorities(user));
+            return new org.springframework.security.core.userdetails.User(userEntity.getUsername(), userEntity.getHashedPassword(),
+                    getAuthorities(userEntity));
         }
     }
 
-    private static List<GrantedAuthority> getAuthorities(User user) {
-        return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+    private static List<GrantedAuthority> getAuthorities(UserEntity userEntity) {
+        return userEntity.getRoleEnums().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
 
     }

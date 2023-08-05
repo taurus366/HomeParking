@@ -10,11 +10,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("Hello World")
 @Route(value = "hello", layout = MainLayout.class)
-@RouteAlias(value = "", layout = MainLayout.class)
-@PermitAll
+//@RouteAlias(value = "", layout = MainLayout.class)
+//@PermitAll
+@RolesAllowed("ADMIN")
 public class HelloWorldView extends HorizontalLayout {
 
     private TextField name;

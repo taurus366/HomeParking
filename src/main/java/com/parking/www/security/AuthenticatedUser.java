@@ -1,7 +1,7 @@
 package com.parking.www.security;
 
-import com.parking.www.data.entity.User;
-import com.parking.www.data.service.UserRepository;
+import com.parking.www.model.entity.UserEntity;
+import com.parking.www.model.service.UserRepository;
 import com.vaadin.flow.spring.security.AuthenticationContext;
 import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,7 @@ public class AuthenticatedUser {
     }
 
     @Transactional
-    public Optional<User> get() {
+    public Optional<UserEntity> get() {
         return authenticationContext.getAuthenticatedUser(UserDetails.class)
                 .map(userDetails -> userRepository.findByUsername(userDetails.getUsername()));
     }

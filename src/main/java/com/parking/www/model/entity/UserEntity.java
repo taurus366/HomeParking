@@ -1,7 +1,7 @@
-package com.parking.www.data.entity;
+package com.parking.www.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.parking.www.data.Role;
+import com.parking.www.model.RoleEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -13,16 +13,18 @@ import jakarta.persistence.Table;
 import java.util.Set;
 
 @Entity
-@Table(name = "application_user")
-public class User extends AbstractEntity {
+@Table(name = "users")
+public class UserEntity extends BaseEntity {
 
+    @Column()
     private String username;
+    @Column()
     private String name;
     @JsonIgnore
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Set<RoleEnum> roleEnums;
     @Lob
     @Column(length = 1000000)
     private byte[] profilePicture;
@@ -30,32 +32,45 @@ public class User extends AbstractEntity {
     public String getUsername() {
         return username;
     }
-    public void setUsername(String username) {
+
+    public UserEntity setUsername(String username) {
         this.username = username;
+        return this;
     }
+
     public String getName() {
         return name;
     }
-    public void setName(String name) {
+
+    public UserEntity setName(String name) {
         this.name = name;
+        return this;
     }
+
     public String getHashedPassword() {
         return hashedPassword;
     }
-    public void setHashedPassword(String hashedPassword) {
+
+    public UserEntity setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+        return this;
     }
-    public Set<Role> getRoles() {
-        return roles;
+
+    public Set<RoleEnum> getRoleEnums() {
+        return roleEnums;
     }
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+
+    public UserEntity setRoleEnums(Set<RoleEnum> roleEnums) {
+        this.roleEnums = roleEnums;
+        return this;
     }
+
     public byte[] getProfilePicture() {
         return profilePicture;
     }
-    public void setProfilePicture(byte[] profilePicture) {
-        this.profilePicture = profilePicture;
-    }
 
+    public UserEntity setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
+        return this;
+    }
 }

@@ -1,6 +1,6 @@
 package com.parking.www;
 
-import com.parking.www.data.service.UserRepository;
+import com.parking.www.model.service.UserRepository;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
