@@ -4,6 +4,7 @@ import com.parking.www.model.entity.UserEntity;
 import com.parking.www.security.AuthenticatedUser;
 import com.parking.www.views.about.AboutView;
 import com.parking.www.views.helloworld.HelloWorldView;
+import com.parking.www.views.user.UserListView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -76,6 +77,10 @@ public class MainLayout extends AppLayout {
         if (accessChecker.hasAccess(AboutView.class)) {
             nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
 
+        }
+
+        if(accessChecker.hasAccess(UserListView.class)) {
+            nav.addItem(new SideNavItem("User list", UserListView.class, LineAwesomeIcon.USERS_SOLID.create()));
         }
 
         return nav;

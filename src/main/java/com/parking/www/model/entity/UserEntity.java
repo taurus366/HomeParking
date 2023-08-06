@@ -21,6 +21,7 @@ public class UserEntity extends BaseEntity {
     @Column()
     private String name;
     @JsonIgnore
+
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)

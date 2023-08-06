@@ -1,10 +1,8 @@
 package com.parking.www.model.entity;
 
-import com.parking.www.model.RoleEnum;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.List;
 
 @MappedSuperclass
 public abstract class BaseEntity {
