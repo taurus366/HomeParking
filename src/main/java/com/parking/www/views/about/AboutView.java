@@ -10,11 +10,13 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
+import jakarta.annotation.security.RolesAllowed;
 
 @PageTitle("About")
 @Route(value = "about", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class) // open the window by deffault
-@AnonymousAllowed
+//@AnonymousAllowed
+@RolesAllowed("USER")
 public class AboutView extends VerticalLayout {
 
     public AboutView() {
