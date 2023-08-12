@@ -1,6 +1,7 @@
 package com.parking.www.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.Base64Variant;
 import com.parking.www.model.RoleEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -10,18 +11,20 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
-
     @Column()
     private String username;
     @Column()
     private String name;
     @JsonIgnore
-
     private String hashedPassword;
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
@@ -30,6 +33,10 @@ public class UserEntity extends BaseEntity {
     @Column(length = 1000000)
     private byte[] profilePicture;
 
+    public UserEntity() {
+
+    }
+
     public String getUsername() {
         return username;
     }
@@ -37,6 +44,12 @@ public class UserEntity extends BaseEntity {
     public UserEntity setUsername(String username) {
         this.username = username;
         return this;
+    }
+
+    public String setPassword(String password) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.hashedPassword = passwordEncoder.encode(password);
+        return this.hashedPassword;
     }
 
     public String getName() {

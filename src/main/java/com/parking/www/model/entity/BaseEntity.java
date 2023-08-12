@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 
+
 @MappedSuperclass
 public abstract class BaseEntity {
 

@@ -11,13 +11,11 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.editor.Editor;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.renderer.Renderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -82,6 +80,8 @@ public class UserListView extends VerticalLayout {
                     .setUsername(usernameFieldDialog.getValue())
                     .setRoleEnums(rolesBoxFieldDialog.getValue())
                     .setName(nameFieldDialog.getValue())
+                    .setPassword(passwordFieldDialog.getValue());
+            newEntity
                     .setCreated(Instant.now())
                     .setModified(Instant.now());
 
@@ -119,7 +119,7 @@ public class UserListView extends VerticalLayout {
                 .setRenderer(new TextRenderer<>(e -> e.getRoleEnums().toString().replaceAll("[\\[\\]]", "")));
 
 
-        final Grid.Column<UserEntity>[] removeColumn = new Grid.Column[1];
+
 
         Grid.Column<UserEntity> editColumn = entityGrid.addComponentColumn(person -> {
             Button editButton = new Button(BTN_EDIT_NAME);
@@ -127,16 +127,12 @@ public class UserListView extends VerticalLayout {
                 if (editor.isOpen())
                     editor.cancel();
                 entityGrid.getEditor().editItem(person);
-
-                if (removeColumn[0] != null) {
-                    removeColumn[0].setVisible(!removeColumn[0].isVisible());
-                }
             });
 
             return editButton;
         }).setWidth("150px").setFlexGrow(0);
 
-        removeColumn[0] = entityGrid.addComponentColumn(person -> {
+        Grid.Column<UserEntity> removeColumn = entityGrid.addComponentColumn(person -> {
             Button removeButton = new Button(BTN_REMOVE_NAME);
             removeButton.addClickListener(e -> {
                 userRepository.deleteById(person.getId());
@@ -185,7 +181,6 @@ public class UserListView extends VerticalLayout {
 
         Button saveBtn = new Button(BTN_SAVE_NAME, e -> {
             editor.save();
-            removeColumn[0].setVisible(!removeColumn[0].isVisible());
         });
         Button cancelBtn = new Button(VaadinIcon.CLOSE.create(), e-> editor.cancel());
         cancelBtn.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR);
