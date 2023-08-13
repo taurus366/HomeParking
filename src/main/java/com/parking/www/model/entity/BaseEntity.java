@@ -1,6 +1,8 @@
 package com.parking.www.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 
@@ -12,9 +14,11 @@ public abstract class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreationTimestamp
     @Column(nullable = false)
     private Instant created;
 
+    @UpdateTimestamp
     @Column(nullable = false)
     private Instant modified;
 

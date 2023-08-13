@@ -13,7 +13,6 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
 import java.util.Set;
 
@@ -87,4 +86,6 @@ public class UserEntity extends BaseEntity {
         this.profilePicture = profilePicture;
         return this;
     }
+
+
 }

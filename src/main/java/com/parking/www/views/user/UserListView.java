@@ -21,7 +21,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import jakarta.annotation.security.RolesAllowed;
-
 import java.time.Instant;
 
 @PageTitle("Users list")
@@ -205,7 +204,5 @@ public class UserListView extends VerticalLayout {
 
 
         add(entityGrid);
-
-
     }
 }
