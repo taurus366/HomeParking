@@ -3,7 +3,6 @@
   "license": "UNLICENSED",
   "type": "module",
   "dependencies": {
-    "@fontsource/arimo": "4.5.0",
     "@polymer/polymer": "3.5.1",
     "@vaadin/a11y-base": "24.1.4",
     "@vaadin/accordion": "24.1.4",
@@ -101,7 +100,6 @@
   },
   "vaadin": {
     "dependencies": {
-      "@fontsource/arimo": "4.5.0",
       "@polymer/polymer": "3.5.1",
       "@vaadin/a11y-base": "24.1.4",
       "@vaadin/accordion": "24.1.4",
@@ -197,7 +195,7 @@
       "workbox-core": "7.0.0",
       "workbox-precaching": "7.0.0"
     },
-    "hash": "620535ad0086f242e8f8591ca5e7cad050ca452135ef68610c6b36112e9c0373"
+    "hash": "c24e213163995c9bfcbcf714f076e6b5a26141ec1145d51896fcaafd8ffd8bea"
   },
   "overrides": {
     "@vaadin/bundles": "$@vaadin/bundles",
@@ -272,7 +270,6 @@
     "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
     "lit": "$lit",
     "@polymer/polymer": "$@polymer/polymer",
-    "@fontsource/arimo": "$@fontsource/arimo",
     "proj4": "$proj4",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "date-fns": "$date-fns",

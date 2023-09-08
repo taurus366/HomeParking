@@ -1,9 +1,12 @@
 package com.parking.www.views.user;
 
+
 import com.parking.www.model.RoleEnum;
 import com.parking.www.model.entity.UserEntity;
 import com.parking.www.model.service.UserRepository;
 import com.parking.www.views.MainLayout;
+import com.vaadin.collaborationengine.CollaborationEngine;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -11,18 +14,31 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.editor.Editor;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.TextRenderer;
+import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.internal.StateNode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.Command;
+import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import jakarta.annotation.security.RolesAllowed;
-import java.time.Instant;
+import jakarta.servlet.http.HttpSession;
 
+import java.time.Instant;
+import java.util.*;
+import java.util.stream.Collectors;
+
+//@Push(PushMode.AUTOMATIC)
 @PageTitle("Users list")
 @Route(value = "user_list", layout = MainLayout.class)
 @RolesAllowed("ADMIN")
@@ -36,14 +52,46 @@ public class UserListView extends VerticalLayout {
    static final String BTN_REMOVE_NAME = "Remove";
    static final String BTN_SAVE_NAME = "Save";
     private final UserRepository userRepository;
+    private Grid<UserEntity> entityGrid;
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+         final UI ui =UI.getCurrent();
+
+        final Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                ui.access(() -> {
+                    entityGrid.setItems(userRepository.findAll());
+//                    System.out.println("10");
+                });
+
+            }
+        }, 30000, 30000);
+
+    }
+//    private Button testButton; // Add a field for the test button
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+
+    }
+
+//    public void updateTestButtonText(String newText) {
+//        UI ui = UI.getCurrent();
+//        ui.access(() -> testButton.setText(newText));
+//    }
+
     public UserListView(UserRepository userRepository) {
         this.userRepository = userRepository;
-        Grid<UserEntity> entityGrid = new Grid<>(UserEntity.class, false);
+        entityGrid = new Grid<>(UserEntity.class, false);
         Editor<UserEntity> editor = entityGrid.getEditor();
+
+
 
         add(new H1("Users List"));
 
         Button newUserBtn = new Button("add New");
+
         add(newUserBtn);
 
         //  new user
@@ -70,8 +118,6 @@ public class UserListView extends VerticalLayout {
         contentLayout.add(rolesBoxFieldDialog);
         contentLayout.add(passwordFieldDialog);
         dialogNewUser.add(contentLayout);
-
-
 
         Button saveNewUserBtn = new Button("Save", e -> {
             UserEntity newEntity = new UserEntity();
@@ -136,7 +182,7 @@ public class UserListView extends VerticalLayout {
             removeButton.addClickListener(e -> {
                 userRepository.deleteById(person.getId());
                 entityGrid.setItems(userRepository.findAll());
-            });
+                       });
             return removeButton;
         }).setWidth("100px").setFlexGrow(0);
 
@@ -203,6 +249,11 @@ public class UserListView extends VerticalLayout {
         });
 
 
+
+
         add(entityGrid);
     }
+
+
+
 }
