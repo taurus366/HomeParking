@@ -34,28 +34,31 @@ import java.util.List;
 public class UserListView extends VerticalLayout {
 
     static final String ID = "id";
-   static final String USERNAME = "username";
-   static final String NAME = "name";
-   static final String ROLEENUMS = "roleEnums";
-   static final String BTN_EDIT_NAME = "Edit";
-   static final String BTN_REMOVE_NAME = "Remove";
-   static final String BTN_SAVE_NAME = "Save";
+    static final String USERNAME = "username";
+    static final String NAME = "name";
+    static final String ROLEENUMS = "roleEnums";
+    static final String BTN_EDIT_NAME = "Edit";
+    static final String BTN_REMOVE_NAME = "Remove";
+    static final String BTN_SAVE_NAME = "Save";
     private final UserRepository userRepository;
     private Grid<UserEntity> entityGrid;
     static String ENTITYGRIDNAME = "ENTITYGRID";
 
     private Updater updater;
+
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-         final UI ui = UI.getCurrent();
-         updater.addItemToUi(ui, ENTITYGRIDNAME, entityGrid);
+        final UI ui = UI.getCurrent();
+        updater.addItemToUi(ui, ENTITYGRIDNAME, entityGrid);
 
     }
+
     @Override
     protected void onDetach(DetachEvent detachEvent) {
         final UI ui = UI.getCurrent();
         updater.removeItemFromUi(ui);
     }
+
     public UserListView(UserRepository userRepository, Updater updater) {
         this.userRepository = userRepository;
         this.updater = updater;
@@ -63,7 +66,6 @@ public class UserListView extends VerticalLayout {
 
         entityGrid = new Grid<>(UserEntity.class, false);
         Editor<UserEntity> editor = entityGrid.getEditor();
-
 
 
         add(new H1("Users List"));
@@ -108,9 +110,9 @@ public class UserListView extends VerticalLayout {
                     .setCreated(Instant.now())
                     .setModified(Instant.now());
 
-            if(!usernameFieldDialog.getValue().isBlank() &&
-                !rolesBoxFieldDialog.getValue().isEmpty() &&
-                        !nameFieldDialog.getValue().isBlank() ) {
+            if (!usernameFieldDialog.getValue().isBlank() &&
+                    !rolesBoxFieldDialog.getValue().isEmpty() &&
+                    !nameFieldDialog.getValue().isBlank()) {
 
                 userRepository
                         .save(newEntity);
@@ -122,13 +124,13 @@ public class UserListView extends VerticalLayout {
                     UIItemPair uiItemPair = (UIItemPair) o;
                     UI ui = uiItemPair.getUi();
 
-                        if(uiItemPair.getItem() instanceof Grid<?>){
-                          Grid<UserEntity> grid = (Grid<UserEntity>) uiItemPair.getItem();
-                          ui.access(() -> {
-                              grid.setItems(allUsers);
-                          });
-                        }
+                    if (uiItemPair.getItem() instanceof Grid<?>) {
+                        Grid<UserEntity> grid = (Grid<UserEntity>) uiItemPair.getItem();
+                        ui.access(() -> {
+                            grid.setItems(allUsers);
                         });
+                    }
+                });
 
                 dialogNewUser.close();
             }
@@ -136,13 +138,13 @@ public class UserListView extends VerticalLayout {
 
         });
 
-        Button cancelNewUserBtn = new Button("Cancel",e -> dialogNewUser.close());
+        Button cancelNewUserBtn = new Button("Cancel", e -> dialogNewUser.close());
 
-        cancelNewUserBtn.addThemeVariants(ButtonVariant.LUMO_ICON,ButtonVariant.LUMO_ERROR);
+        cancelNewUserBtn.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR);
 
-        dialogNewUser.getFooter().add(cancelNewUserBtn,saveNewUserBtn);
+        dialogNewUser.getFooter().add(cancelNewUserBtn, saveNewUserBtn);
 
-       add(dialogNewUser);
+        add(dialogNewUser);
 
 
 //        entityGrid.setColumns(ID,"username","name","roleEnums");
@@ -152,8 +154,6 @@ public class UserListView extends VerticalLayout {
         final Grid.Column<UserEntity> columnName = entityGrid.addColumn(NAME);
         final Grid.Column<UserEntity> columnRole = entityGrid.addColumn(ROLEENUMS).setHeader("Roles")
                 .setRenderer(new TextRenderer<>(e -> e.getRoleEnums().toString().replaceAll("[\\[\\]]", "")));
-
-
 
 
         Grid.Column<UserEntity> editColumn = entityGrid.addComponentColumn(person -> {
@@ -175,12 +175,12 @@ public class UserListView extends VerticalLayout {
 
 //                entityGrid.setItems(userRepository.findAll());
 
-                    final List<UserEntity> allUsers = userRepository.findAll();
+                final List<UserEntity> allUsers = userRepository.findAll();
                 updater.getItemsByName(ENTITYGRIDNAME).forEach(o -> {
                     UIItemPair uiItemPair = (UIItemPair) o;
                     UI ui = uiItemPair.getUi();
 
-                    if(uiItemPair.getItem() instanceof Grid<?>){
+                    if (uiItemPair.getItem() instanceof Grid<?>) {
                         Grid<UserEntity> grid = (Grid<UserEntity>) uiItemPair.getItem();
                         ui.access(() -> {
                             grid.setItems(allUsers);
@@ -188,12 +188,9 @@ public class UserListView extends VerticalLayout {
                     }
                 });
 
-                       });
+            });
             return removeButton;
         }).setWidth("100px").setFlexGrow(0);
-
-
-
 
 
 //        final Grid.Column username = entityGrid.getColumnByKey("username");
@@ -233,7 +230,7 @@ public class UserListView extends VerticalLayout {
         Button saveBtn = new Button(BTN_SAVE_NAME, e -> {
             editor.save();
         });
-        Button cancelBtn = new Button(VaadinIcon.CLOSE.create(), e-> editor.cancel());
+        Button cancelBtn = new Button(VaadinIcon.CLOSE.create(), e -> editor.cancel());
         cancelBtn.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR);
 
         HorizontalLayout actions = new HorizontalLayout(saveBtn,
@@ -251,15 +248,12 @@ public class UserListView extends VerticalLayout {
 
         newUserBtn.addClickListener(e -> {
 
-        dialogNewUser.open();
+            dialogNewUser.open();
         });
-
-
 
 
         add(entityGrid);
     }
-
 
 
 }
