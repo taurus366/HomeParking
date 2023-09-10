@@ -120,7 +120,7 @@ public class UserListView extends VerticalLayout {
 //                entityGrid
 //                        .setItems(userRepository.findAll());
                 final List<UserEntity> allUsers = userRepository.findAll();
-                updater.getItemsByName(ENTITYGRIDNAME).forEach(o -> {
+                updater.getItemByName(ENTITYGRIDNAME).forEach(o -> {
                     UIItemPair uiItemPair = (UIItemPair) o;
                     UI ui = uiItemPair.getUi();
 
@@ -176,12 +176,11 @@ public class UserListView extends VerticalLayout {
 //                entityGrid.setItems(userRepository.findAll());
 
                 final List<UserEntity> allUsers = userRepository.findAll();
-                updater.getItemsByName(ENTITYGRIDNAME).forEach(o -> {
-                    UIItemPair uiItemPair = (UIItemPair) o;
-                    UI ui = uiItemPair.getUi();
+                updater.getItemByName(ENTITYGRIDNAME).forEach(o -> {
+                    UI ui = o.getUi();
 
-                    if (uiItemPair.getItem() instanceof Grid<?>) {
-                        Grid<UserEntity> grid = (Grid<UserEntity>) uiItemPair.getItem();
+                    if (o.getItem() instanceof Grid<?>) {
+                        Grid<UserEntity> grid = (Grid<UserEntity>) o.getItem();
                         ui.access(() -> {
                             grid.setItems(allUsers);
                         });

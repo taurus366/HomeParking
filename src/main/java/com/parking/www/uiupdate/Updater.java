@@ -1,8 +1,6 @@
 package com.parking.www.uiupdate;
 
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -25,7 +23,7 @@ public class Updater {
         this.uiListMap.remove(ui);
     }
 
-    public Stream<Object> getItemsByName(String itemGetByName) {
+    public Stream<UIItemPair> getItemByName(String itemGetByName) {
         return uiListMap.entrySet()
                 .stream()
                 .flatMap(entry -> entry.getValue()
@@ -34,7 +32,8 @@ public class Updater {
                         .filter(e -> e.getKey().equals(itemGetByName))
                         .map(e -> new UIItemPair(entry.getKey(), e.getValue())));
     }
-
-
+    public Map<String, Object> getUiItems(UI ui) {
+        return uiListMap.get(ui);
+    }
 }
 
