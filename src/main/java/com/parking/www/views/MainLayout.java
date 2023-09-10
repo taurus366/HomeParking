@@ -5,18 +5,19 @@ import com.parking.www.security.AuthenticatedUser;
 import com.parking.www.views.about.AboutView;
 import com.parking.www.views.helloworld.HelloWorldView;
 import com.parking.www.views.user.UserListView;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.contextmenu.MenuItem;
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Header;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.menubar.MenuBar;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.sidenav.SideNav;
@@ -29,6 +30,7 @@ import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.shared.communication.PushMode;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import java.io.ByteArrayInputStream;
+import java.util.Arrays;
 import java.util.Optional;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -59,7 +61,41 @@ public class MainLayout extends AppLayout implements RouterLayout {
         viewTitle = new H2();
         viewTitle.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
 
-        addToNavbar(true, toggle, viewTitle);
+        // Add the bell icon to the header
+        Span numberOfNotifications = new Span("4");
+        numberOfNotifications.getElement().getThemeList().addAll(
+                Arrays.asList("badge", "error", "primary", "small", "pill"));
+        numberOfNotifications.getStyle().set("position", "absolute")
+                .set("transform", "translate(-40%, -85%)");
+
+
+//        Icon bellIcon = VaadinIcon.BELL_O.create();
+
+//        bellIcon.getElement().getStyle().set("")
+//        bellIcon.setClassName("bell-icon");
+//        bellIcon.addClickListener(e -> {
+//            Notification.show("You have new notifications!");
+//        });
+//        bellIcon.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+//        bellIcon.getElement().appendChild(numberOfNotifications.getElement());
+
+        Button bellBtn = new Button(VaadinIcon.BELL_O.create());
+        bellBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        bellBtn.getElement().appendChild(numberOfNotifications.getElement());
+        bellBtn.getElement().getStyle().set("flex-grow", "1");
+
+        Div sampleNotification = new Div(new Text("Show notifications here"));
+        sampleNotification.getStyle().set("padding", "var(--lumo-space-l)");
+
+        ContextMenu menu = new ContextMenu();
+        menu.setOpenOnClick(true);
+        menu.setTarget(bellBtn);
+        menu.add(sampleNotification);
+
+        Div spacer = new Div();
+        spacer.getStyle().set("flex-grow", "35");
+
+        addToNavbar(true, toggle, viewTitle, spacer, bellBtn);
     }
 
     private void addDrawerContent() {
@@ -117,9 +153,13 @@ public class MainLayout extends AppLayout implements RouterLayout {
             div.getElement().getStyle().set("align-items", "center");
             div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
             userName.add(div);
+            userName.getSubMenu().addItem("Profile", e -> {
+                Notification.show("Not implemented yet!");
+            });
             userName.getSubMenu().addItem("Sign out", e -> {
                 authenticatedUser.logout();
             });
+
 
             layout.add(userMenu);
         } else {
