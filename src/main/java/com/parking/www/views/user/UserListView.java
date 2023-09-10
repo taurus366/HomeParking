@@ -1,11 +1,11 @@
 package com.parking.www.views.user;
 
-
 import com.parking.www.model.RoleEnum;
 import com.parking.www.model.entity.UserEntity;
 import com.parking.www.model.service.UserRepository;
+import com.parking.www.uiupdate.UIItemPair;
+import com.parking.www.uiupdate.Updater;
 import com.parking.www.views.MainLayout;
-import com.vaadin.collaborationengine.CollaborationEngine;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -14,31 +14,20 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.editor.Editor;
 import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.renderer.TextRenderer;
-import com.vaadin.flow.dom.Element;
-import com.vaadin.flow.internal.StateNode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.Command;
-import com.vaadin.flow.server.VaadinService;
-import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.shared.Registration;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.servlet.http.HttpSession;
 
 import java.time.Instant;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
-//@Push(PushMode.AUTOMATIC)
 @PageTitle("Users list")
 @Route(value = "user_list", layout = MainLayout.class)
 @RolesAllowed("ADMIN")
@@ -53,36 +42,25 @@ public class UserListView extends VerticalLayout {
    static final String BTN_SAVE_NAME = "Save";
     private final UserRepository userRepository;
     private Grid<UserEntity> entityGrid;
+    static String ENTITYGRIDNAME = "ENTITYGRID";
+
+    private Updater updater;
     @Override
     protected void onAttach(AttachEvent attachEvent) {
-         final UI ui =UI.getCurrent();
-
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                ui.access(() -> {
-                    entityGrid.setItems(userRepository.findAll());
-//                    System.out.println("10");
-                });
-
-            }
-        }, 30000, 30000);
+         final UI ui = UI.getCurrent();
+         updater.addItemToUi(ui, ENTITYGRIDNAME, entityGrid);
 
     }
-//    private Button testButton; // Add a field for the test button
     @Override
     protected void onDetach(DetachEvent detachEvent) {
-
+        final UI ui = UI.getCurrent();
+        updater.removeItemFromUi(ui);
     }
-
-//    public void updateTestButtonText(String newText) {
-//        UI ui = UI.getCurrent();
-//        ui.access(() -> testButton.setText(newText));
-//    }
-
-    public UserListView(UserRepository userRepository) {
+    public UserListView(UserRepository userRepository, Updater updater) {
         this.userRepository = userRepository;
+        this.updater = updater;
+
+
         entityGrid = new Grid<>(UserEntity.class, false);
         Editor<UserEntity> editor = entityGrid.getEditor();
 
@@ -137,8 +115,20 @@ public class UserListView extends VerticalLayout {
                 userRepository
                         .save(newEntity);
 
-                entityGrid
-                        .setItems(userRepository.findAll());
+//                entityGrid
+//                        .setItems(userRepository.findAll());
+                final List<UserEntity> allUsers = userRepository.findAll();
+                updater.getItemsByName(ENTITYGRIDNAME).forEach(o -> {
+                    UIItemPair uiItemPair = (UIItemPair) o;
+                    UI ui = uiItemPair.getUi();
+
+                        if(uiItemPair.getItem() instanceof Grid<?>){
+                          Grid<UserEntity> grid = (Grid<UserEntity>) uiItemPair.getItem();
+                          ui.access(() -> {
+                              grid.setItems(allUsers);
+                          });
+                        }
+                        });
 
                 dialogNewUser.close();
             }
@@ -181,7 +171,23 @@ public class UserListView extends VerticalLayout {
             Button removeButton = new Button(BTN_REMOVE_NAME);
             removeButton.addClickListener(e -> {
                 userRepository.deleteById(person.getId());
-                entityGrid.setItems(userRepository.findAll());
+
+
+//                entityGrid.setItems(userRepository.findAll());
+
+                    final List<UserEntity> allUsers = userRepository.findAll();
+                updater.getItemsByName(ENTITYGRIDNAME).forEach(o -> {
+                    UIItemPair uiItemPair = (UIItemPair) o;
+                    UI ui = uiItemPair.getUi();
+
+                    if(uiItemPair.getItem() instanceof Grid<?>){
+                        Grid<UserEntity> grid = (Grid<UserEntity>) uiItemPair.getItem();
+                        ui.access(() -> {
+                            grid.setItems(allUsers);
+                        });
+                    }
+                });
+
                        });
             return removeButton;
         }).setWidth("100px").setFlexGrow(0);
