@@ -32,8 +32,8 @@ public class Updater {
                         .filter(e -> e.getKey().equals(itemGetByName))
                         .map(e -> new UIItemPair(entry.getKey(), e.getValue())));
     }
-    public Map<String, Object> getUiItems(UI ui) {
-        return uiListMap.get(ui);
+    public Map<UI, Map<String, Object>> getUiListMap() {
+        return uiListMap;
     }
 }
 
