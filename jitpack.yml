@@ -3,6 +3,13 @@ before_install:
   - install glibc-devel.i686
   - strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_2.25
   - wget https://ftp.gnu.org/gnu/glibc/glibc-2.27.tar.gz --no-check-certificate
+  - tar zxvf glibc-2.27.tar.gz
+  - cd glibc-2.27
+    mkdir build
+    cd build
+  - make
+  - sudo make install
+  - ldd --version
 
 jdk:
   - openjdk19
