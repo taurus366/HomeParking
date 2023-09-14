@@ -1,7 +1,5 @@
 before_install:
-  - sdk install java 20
+  - sdk install java 19
   - strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC
 jdk:
-  - openjdk20
-node:
-  - 20
+  - openjdk19
