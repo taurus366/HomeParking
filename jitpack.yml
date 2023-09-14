@@ -1,4 +1,6 @@
 before_install:
   - sdk install java 17
+  - nvm install 14
+  - nvm alias default 14
 jdk:
   - openjdk17
