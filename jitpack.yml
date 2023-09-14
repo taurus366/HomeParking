@@ -1,5 +1,6 @@
 before_install:
-  - sdk install java 19
-  - strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC
+  - sdk install java
+  - install glibc-devel.i686
+  - strings /lib/x86_64-linux-gnu/libc.so.6 | grep GLIBC_2.25
 jdk:
   - openjdk19
