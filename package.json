@@ -3,6 +3,7 @@
   "license": "UNLICENSED",
   "type": "module",
   "dependencies": {
+    "@fontsource/arimo": "^5.0.12",
     "@polymer/polymer": "3.5.1",
     "@vaadin/a11y-base": "24.1.7",
     "@vaadin/accordion": "24.1.7",
@@ -174,7 +175,8 @@
     "proj4": "$proj4",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "date-fns": "$date-fns",
-    "mobile-drag-drop": "$mobile-drag-drop"
+    "mobile-drag-drop": "$mobile-drag-drop",
+    "@fontsource/arimo": "$@fontsource/arimo"
   },
   "vaadin": {
     "dependencies": {
@@ -273,7 +275,7 @@
       "workbox-core": "7.0.0",
       "workbox-precaching": "7.0.0"
     },
-    "hash": "395f28ab9a9c1fa9324d7c8c638c645aa2a0e48a61ec115905db10c1e5076219"
+    "hash": "7af401b6bc70bb30569f04406d79ec7118e4e192d11b69dfa7d42e057715caa2"
   },
   "engines": {
     "node": "20"
