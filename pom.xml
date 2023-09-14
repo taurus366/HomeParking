@@ -3,7 +3,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- Project from https://start.vaadin.com/project/fc78be60-64e6-4aac-b24e-4ebcc00c3487 -->
-    <groupId>com.parking.www</groupId>
+<!--    <groupId>com.parking.www</groupId>-->
+    <groupId>com.github.taurus366</groupId>
     <artifactId>homeparking</artifactId>
     <name>homeparking</name>
     <version>1.0-SNAPSHOT</version>
