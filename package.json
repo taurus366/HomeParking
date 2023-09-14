@@ -274,5 +274,8 @@
       "workbox-precaching": "7.0.0"
     },
     "hash": "395f28ab9a9c1fa9324d7c8c638c645aa2a0e48a61ec115905db10c1e5076219"
+  },
+  "engines": {
+    "node": "20"
   }
 }
