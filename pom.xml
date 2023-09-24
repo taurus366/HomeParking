@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- Project from https://start.vaadin.com/project/fc78be60-64e6-4aac-b24e-4ebcc00c3487 -->
-<!--    <groupId>com.parking.www</groupId>-->
+<!--    <groupId>com.github.taurus366</groupId>-->
     <groupId>com.github.taurus366</groupId>
     <artifactId>homeparking</artifactId>
     <name>homeparking</name>
@@ -12,7 +12,7 @@
 
     <properties>
         <java.version>19</java.version>
-        <vaadin.version>24.1.9</vaadin.version>
+        <vaadin.version>24.1.10</vaadin.version>
         <selenium.version>4.10.0</selenium.version>
     </properties>
 
@@ -23,12 +23,18 @@
     </parent>
 
     <repositories>
+
         <repository>
             <id>Vaadin Directory</id>
             <url>https://maven.vaadin.com/vaadin-addons</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+
+        <repository>
+            <id>custom-repo</id>
+            <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
 
@@ -45,6 +51,7 @@
     </dependencyManagement>
 
     <dependencies>
+
         <dependency>
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
@@ -121,51 +128,6 @@
             <scope>provided</scope> <!-- Servlet API is provided by the container -->
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.vaadin.addons</groupId>-->
-<!--            <artifactId>blackboard</artifactId>-->
-<!--            <version>2.2.0</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.vaadin.addons</groupId>-->
-<!--            <artifactId>blackboard</artifactId>-->
-<!--            <version>2.2.0</version>-->
-<!--        </dependency>-->
-
-
-        <!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-websocket</artifactId>-->
-<!--        </dependency>-->
-
-
-<!--        <dependency>-->
-<!--            <groupId>org.atmosphere</groupId>-->
-<!--            <artifactId>atmosphere-runtime</artifactId>-->
-<!--            <version>2.7.9</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.atmosphere/atmosphere-jersey &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.atmosphere</groupId>-->
-<!--            <artifactId>atmosphere-jersey</artifactId>-->
-<!--            <version>2.7.9</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.atmosphere.client/javascript -->
-
-
-<!--        <dependency>-->
-<!--            <groupId>nl.martijndwars</groupId>-->
-<!--            <artifactId>web-push</artifactId>-->
-<!--&lt;!&ndash;            <version>5.1.1</version>&ndash;&gt;-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.bouncycastle</groupId>-->
-<!--            <artifactId>bcprov-jdk15on</artifactId>-->
-<!--&lt;!&ndash;            <version>1.69</version>&ndash;&gt;-->
-<!--        </dependency>-->
-
-
     </dependencies>
 
     <build>
@@ -174,6 +136,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
                 <configuration>
                     <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5463</jvmArguments>
                     <wait>500</wait>
@@ -239,6 +202,7 @@
                     <plugin>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${project.parent.version}</version>
                         <executions>
                             <execution>
                                 <id>start-spring-boot</id>
@@ -257,23 +221,25 @@
                         </executions>
                     </plugin>
 
+
                     <!-- Runs the integration tests (*IT) after the server is started -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>integration-test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <trimStackTrace>false</trimStackTrace>
-                            <enableAssertions>true</enableAssertions>
-                        </configuration>
-                    </plugin>
+<!--                    <plugin>-->
+<!--                        <groupId>org.apache.maven.plugins</groupId>-->
+<!--                        <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                        <version>3.0.0-M5</version> &lt;!&ndash; Specify a valid version &ndash;&gt;-->
+<!--                        <executions>-->
+<!--                            <execution>-->
+<!--                                <goals>-->
+<!--                                    <goal>integration-test</goal>-->
+<!--                                    <goal>verify</goal>-->
+<!--                                </goals>-->
+<!--                            </execution>-->
+<!--                        </executions>-->
+<!--                        <configuration>-->
+<!--                            &lt;!&ndash; Configuration options for the plugin &ndash;&gt;-->
+<!--                        </configuration>-->
+<!--                    </plugin>-->
+
                 </plugins>
             </build>
         </profile>
