@@ -105,7 +105,12 @@ public class MainLayout extends AppLayout implements RouterLayout {
         H1 appName = new H1("HomeParking");
         appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
         Header header = new Header(appName);
-        RouteConfiguration.forSessionScope().setRoute("camera_list", CameraListView.class, MainLayout.class);
+//        RouteConfiguration.forSessionScope().setRoute("camera_list", CameraListView.class, MainLayout.class);
+        RouteConfiguration configuration = RouteConfiguration.forSessionScope();
+
+// Cast MainLayout.class to Class<? extends RouterLayout>
+//        configuration.setRoute("camera_list", CameraListView.class, (Class<? extends RouterLayout>) MainLayout.class);
+
 
         Scroller scroller = new Scroller(createNavigation());
 
