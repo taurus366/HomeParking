@@ -22,6 +22,7 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
@@ -31,7 +32,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 
-import org.parking.system.views.camera.Camera;
+import org.parking.system.views.camera.CameraListView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -108,6 +109,10 @@ public class MainLayout extends AppLayout implements RouterLayout {
         Scroller scroller = new Scroller(createNavigation());
 
         addToDrawer(header, scroller, createFooter());
+
+        // Set the layout for the "camera-list" route
+
+//        RouteConfiguration.forSessionScope().setRoute("camera_list", CameraListView.class, MainLayout.class);
     }
 
     private SideNav createNavigation() {
@@ -126,8 +131,9 @@ public class MainLayout extends AppLayout implements RouterLayout {
             nav.addItem(new SideNavItem("User list", UserListView.class, LineAwesomeIcon.USERS_SOLID.create()));
         }
 
-        if(accessChecker.hasAccess(Camera.class)) {
-            nav.addItem(new SideNavItem("Camera list", Camera.class, LineAwesomeIcon.CAMERA_SOLID.create()));
+        if(accessChecker.hasAccess(CameraListView.class)) {
+//            CameraListView.setRoutes  continue the code
+            nav.addItem(new SideNavItem("Camera list", CameraListView.class, LineAwesomeIcon.CAMERA_SOLID.create()));
         }
 
         return nav;
