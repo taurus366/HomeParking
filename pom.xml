@@ -20,6 +20,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.1.0</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <repositories>
@@ -126,6 +127,12 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version> <!-- Use the appropriate version -->
             <scope>provided</scope> <!-- Servlet API is provided by the container -->
+        </dependency>
+        <dependency>
+            <groupId>org.parking.system</groupId>
+            <artifactId>ParkingSystem</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

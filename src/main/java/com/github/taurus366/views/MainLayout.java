@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 
+import org.parking.system.views.camera.Camera;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -41,10 +42,12 @@ public class MainLayout extends AppLayout implements RouterLayout {
 
     private H2 viewTitle;
 
+
     private AuthenticatedUser authenticatedUser;
     private AccessAnnotationChecker accessChecker;
 
     public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
+
         this.authenticatedUser = authenticatedUser;
         this.accessChecker = accessChecker;
 
@@ -123,9 +126,9 @@ public class MainLayout extends AppLayout implements RouterLayout {
             nav.addItem(new SideNavItem("User list", UserListView.class, LineAwesomeIcon.USERS_SOLID.create()));
         }
 
-//        if(accessChecker.hasAccess(Camera.class)) {
-//            nav.addItem(new SideNavItem("Camera list", Camera.class, LineAwesomeIcon.CAMERA_SOLID.create()));
-//        }
+        if(accessChecker.hasAccess(Camera.class)) {
+            nav.addItem(new SideNavItem("Camera list", Camera.class, LineAwesomeIcon.CAMERA_SOLID.create()));
+        }
 
         return nav;
     }
