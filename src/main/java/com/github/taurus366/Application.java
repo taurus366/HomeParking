@@ -3,6 +3,7 @@ package com.github.taurus366;
 import com.github.taurus366.model.service.UserRepository;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.component.page.Push;
+import com.vaadin.flow.spring.annotation.EnableVaadin;
 import com.vaadin.flow.theme.Theme;
 import javax.sql.DataSource;
 
@@ -34,6 +35,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //})
 //@VaadinServletConfiguration ( ui = MyUI.class, productionMode = false )
 //@EnableVaadin
+@EnableVaadin({"com.github.taurus366.views", "org.parking.system.views"})
 //@PWA(name = "Web Push", shortName = "Push")
 public class Application implements AppShellConfigurator {
 
