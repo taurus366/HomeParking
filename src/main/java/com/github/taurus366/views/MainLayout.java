@@ -142,7 +142,7 @@ public class MainLayout extends AppLayout implements RouterLayout {
             nav.addItem(new SideNavItem("Camera list", CameraListView.class, LineAwesomeIcon.CAMERA_SOLID.create()));
 
             try {
-                RouteConfiguration.forSessionScope().setRoute("camera-list", CameraListView.class);
+                RouteConfiguration.forSessionScope().setRoute("camera_list", CameraListView.class, MainLayout.class);
             } catch (Exception ignored) {
 
             }
