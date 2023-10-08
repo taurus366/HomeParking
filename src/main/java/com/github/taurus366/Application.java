@@ -35,7 +35,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //})
 //@VaadinServletConfiguration ( ui = MyUI.class, productionMode = false )
 //@EnableVaadin
-@EnableVaadin({"com.github.taurus366.views", "org.parking.system.views"})
+@EnableVaadin({"com.github.taurus366", "org.parking.system", "org.system.shared"})
 //@PWA(name = "Web Push", shortName = "Push")
 public class Application implements AppShellConfigurator {
 
