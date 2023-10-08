@@ -105,11 +105,7 @@ public class MainLayout extends AppLayout implements RouterLayout {
         H1 appName = new H1("HomeParking");
         appName.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.Margin.NONE);
         Header header = new Header(appName);
-//        RouteConfiguration.forSessionScope().setRoute("camera_list", CameraListView.class, MainLayout.class);
-        RouteConfiguration configuration = RouteConfiguration.forSessionScope();
 
-// Cast MainLayout.class to Class<? extends RouterLayout>
-//        configuration.setRoute("camera_list", CameraListView.class, (Class<? extends RouterLayout>) MainLayout.class);
 
 
         Scroller scroller = new Scroller(createNavigation());
@@ -138,9 +134,18 @@ public class MainLayout extends AppLayout implements RouterLayout {
             nav.addItem(new SideNavItem("User list", UserListView.class, LineAwesomeIcon.USERS_SOLID.create()));
         }
 
+
+
+
         if(accessChecker.hasAccess(CameraListView.class)) {
 //            CameraListView.setRoutes  continue the code
             nav.addItem(new SideNavItem("Camera list", CameraListView.class, LineAwesomeIcon.CAMERA_SOLID.create()));
+
+            try {
+                RouteConfiguration.forSessionScope().setRoute("camera-list", CameraListView.class);
+            } catch (Exception ignored) {
+
+            }
         }
 
         return nav;
