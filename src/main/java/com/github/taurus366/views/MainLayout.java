@@ -33,6 +33,7 @@ import java.util.Optional;
 
 
 import org.parking.system.views.camera.CameraListView;
+import org.parking.system.views.door.DoorView;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -143,6 +144,15 @@ public class MainLayout extends AppLayout implements RouterLayout {
 
             try {
                 RouteConfiguration.forSessionScope().setRoute("camera_list", CameraListView.class, MainLayout.class);
+            } catch (Exception ignored) {
+
+            }
+        }
+
+        if(accessChecker.hasAccess(CameraListView.class)) {
+            nav.addItem(new SideNavItem("Door", DoorView.class, LineAwesomeIcon.DUNGEON_SOLID.create()));
+            try {
+                RouteConfiguration.forSessionScope().setRoute("door", DoorView.class, MainLayout.class);
             } catch (Exception ignored) {
 
             }
