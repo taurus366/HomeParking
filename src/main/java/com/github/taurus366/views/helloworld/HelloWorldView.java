@@ -2,13 +2,20 @@ package com.github.taurus366.views.helloworld;
 
 import com.github.taurus366.views.MainLayout;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinRequest;
+import com.vaadin.flow.server.VaadinService;
 import jakarta.annotation.security.RolesAllowed;
+import org.system.i18n.CustomI18NProvider;
+
+import java.util.Locale;
+import java.util.Optional;
 
 @PageTitle("Hello World")
 @Route(value = "hello", layout = MainLayout.class)
@@ -21,6 +28,7 @@ public class HelloWorldView extends HorizontalLayout {
     private Button sayHello;
 
     public HelloWorldView() {
+
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
         sayHello.addClickListener(e -> {
@@ -31,7 +39,19 @@ public class HelloWorldView extends HorizontalLayout {
         setMargin(true);
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
 
-        add(name, sayHello);
+        CustomI18NProvider provider = new CustomI18NProvider();
+
+        VaadinService.getCurrentResponse().setContentType("text/html; charset=UTF-8");
+//        VaadinService.getCurrentResponse().setCharacterEncoding("UTF-8");
+
+
+//        CREATE TABLES FOR LOCALES
+        final String characterEncoding = VaadinService.getCurrentRequest().getCharacterEncoding();
+        System.out.println(characterEncoding);
+        name = new TextField(provider.getTranslation("hello",provider.LOCALE_BG));
+
+
+        add(name, sayHello, provider.getLanguageSelectorBox());
     }
 
 }
